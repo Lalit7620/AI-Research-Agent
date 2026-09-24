@@ -25,4 +25,23 @@ class ResearchRequest(models.Model):
         default="PENDING"
     )
     
-    created_at=
+    created_at=models.DateTimeField(auto_now_add=True)
+    
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return self.query
+    
+class ResearchReport(models.Model):
+    research_request=models.OneToOneField(
+        ResearchRequest,
+        on_delete=models.CASCADE,
+        related_name="report"
+    )
+    
+    content=models.TextField()
+    created_at=models.DateTimeField(auto_now_add=True)
+    updated_at=models.DateTimeField(auto_now=True)
+    
+    def __str__(self):
+        return f"Report for: {self.research_request.query}"
