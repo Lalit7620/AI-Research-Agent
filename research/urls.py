@@ -1,10 +1,12 @@
 from django.urls import path
-from .views import ResearchRequestCreateView
+
+from .views import ResearchView
+
 
 urlpatterns = [
     path(
         "",
-        ResearchRequestCreateView.as_view(),
-        name="research-create"
-    )
+        ResearchView.as_view(),
+        name="research",
+    ),
 ]

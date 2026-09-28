@@ -1,0 +1,217 @@
+{% extends "research/base.html" %}
+
+{% block title %}Dashboard | ResearchAI{% endblock %}
+
+{% block header_title %}
+    Research Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto">
+
+    <!-- Welcome -->
+    <section class="mb-10">
+
+        <p class="text-sm text-indigo-400 font-medium mb-2">
+            AI RESEARCH WORKSPACE
+        </p>
+
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">
+            What would you like to research?
+        </h2>
+
+        <p class="text-slate-400 mt-3 max-w-2xl">
+            Ask a question and let your research agent search,
+            analyze, and synthesize information from multiple sources.
+        </p>
+
+    </section>
+
+
+    <!-- Research Input -->
+    <section class="research-card p-6 md:p-8 mb-12">
+
+        <form id="research-form">
+
+            {% csrf_token %}
+
+            <div class="mb-6">
+
+                <label
+                    for="research-query"
+                    class="block text-sm font-medium text-slate-300 mb-3">
+
+                    Research question
+
+                </label>
+
+                <textarea
+                    id="research-query"
+                    name="query"
+                    rows="5"
+                    maxlength="2000"
+                    placeholder="Example: What are the major challenges of deploying large language models in production?"
+                    class="research-input w-full resize-none"
+                    required></textarea>
+
+            </div>
+
+
+            <div class="flex flex-col sm:flex-row
+                        sm:items-center sm:justify-between gap-4">
+
+                <div class="text-sm text-slate-500">
+
+                    <span id="character-count">0</span>/2000 characters
+
+                </div>
+
+
+                <button
+                    type="submit"
+                    id="research-button"
+                    class="research-button">
+
+                    <span id="button-text">
+                        Start Research
+                    </span>
+
+                    <span id="button-icon">
+                        ✦
+                    </span>
+
+                </button>
+
+            </div>
+
+        </form>
+
+    </section>
+
+
+    <!-- Research Status -->
+    <section
+        id="research-status"
+        class="hidden mb-12">
+
+        <div class="research-card p-6">
+
+            <div class="flex items-center gap-4">
+
+                <div class="research-spinner"></div>
+
+                <div>
+
+                    <h3
+                        id="status-title"
+                        class="font-medium">
+
+                        Research in progress
+
+                    </h3>
+
+                    <p
+                        id="status-message"
+                        class="text-sm text-slate-400 mt-1">
+
+                        Preparing your research...
+
+                    </p>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Research Result -->
+    <section
+        id="research-result"
+        class="hidden mb-12">
+
+        <div class="research-card p-6 md:p-8">
+
+            <div class="mb-6">
+
+                <p class="text-sm text-indigo-400 font-medium mb-2">
+                    RESEARCH REPORT
+                </p>
+
+                <h3
+                    id="report-title"
+                    class="text-2xl font-semibold">
+
+                    Research Result
+
+                </h3>
+
+            </div>
+
+
+            <div
+                id="report-content"
+                class="text-slate-300 leading-7 whitespace-pre-wrap">
+
+            </div>
+
+        </div>
+
+    </section>
+
+
+    <!-- Recent Research -->
+    <section>
+
+        <div class="flex items-center justify-between mb-5">
+
+            <div>
+
+                <h3 class="text-xl font-semibold">
+                    Recent Research
+                </h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Your latest research requests
+                </p>
+
+            </div>
+
+            <a
+                href="#"
+                class="text-sm text-indigo-400 hover:text-indigo-300">
+
+                View history →
+
+            </a>
+
+        </div>
+
+
+        <!-- Empty state for now -->
+        <div
+            id="recent-research"
+            class="research-card p-10 text-center">
+
+            <div class="text-4xl mb-4">
+                ✦
+            </div>
+
+            <h4 class="font-medium text-lg">
+                No research yet
+            </h4>
+
+            <p class="text-slate-500 text-sm mt-2">
+                Your completed research will appear here.
+            </p>
+
+        </div>
+
+    </section>
+
+</div>
+
+{% endblock %}

@@ -1,0 +1,222 @@
+{% load static %}
+
+<!DOCTYPE html>
+
+<html lang="en">
+
+<head>
+
+    <meta charset="UTF-8">
+
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+    <title>{% block title %}ResearchAI{% endblock %}</title>
+
+    <!-- Tailwind CSS -->
+    <script src="https://cdn.tailwindcss.com"></script>
+
+    <!-- Custom CSS -->
+    <link rel="stylesheet" href="{% static 'research/css/style.css' %}">
+
+</head>
+
+<body class="bg-slate-950 text-slate-100 min-h-screen">
+
+    <div class="flex min-h-screen">
+
+        <!-- Sidebar -->
+
+        <aside class="w-64 bg-slate-900 border-r border-slate-800
+                      flex flex-col">
+
+            <!-- Logo -->
+
+            <div class="px-6 py-5 border-b border-slate-800">
+
+                <div class="flex items-center gap-3">
+
+                    <div class="w-9 h-9 rounded-lg bg-indigo-600
+                                flex items-center justify-center
+                                font-bold">
+
+                        R
+
+                    </div>
+
+                    <div>
+
+                        <h1 class="font-semibold text-lg">
+
+                            ResearchAI
+
+                        </h1>
+
+                        <p class="text-xs text-slate-500">
+
+                            AI Research Agent
+
+                        </p>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+
+            <!-- Navigation -->
+
+            <nav class="flex-1 px-4 py-6 space-y-2">
+
+                <a href="#"
+                   class="sidebar-link active">
+
+                    <span>⌂</span>
+
+                    <span>Dashboard</span>
+
+                </a>
+
+                <a href="#"
+                   class="sidebar-link">
+
+                    <span>✦</span>
+
+                    <span>New Research</span>
+
+                </a>
+
+                <a href="#"
+                   class="sidebar-link">
+
+                    <span>▣</span>
+
+                    <span>Documents</span>
+
+                </a>
+
+                <a href="#"
+                   class="sidebar-link">
+
+                    <span>◫</span>
+
+                    <span>Reports</span>
+
+                </a>
+
+                <a href="#"
+                   class="sidebar-link">
+
+                    <span>↺</span>
+
+                    <span>History</span>
+
+                </a>
+
+            </nav>
+
+
+            <!-- Bottom section -->
+
+            <div class="px-4 py-4 border-t border-slate-800">
+
+                <a href="#"
+                   class="sidebar-link">
+
+                    <span>⚙</span>
+
+                    <span>Settings</span>
+
+                </a>
+
+            </div>
+
+        </aside>
+
+
+        <!-- Main area -->
+
+        <div class="flex-1 flex flex-col">
+
+            <!-- Top bar -->
+
+            <header class="h-16 border-b border-slate-800
+                           bg-slate-950/80 backdrop-blur
+                           flex items-center justify-between
+                           px-8">
+
+                <div>
+
+                    {% block header_title %}
+
+                    Dashboard
+
+                    {% endblock %}
+
+                </div>
+
+
+                <!-- User -->
+
+                <div class="flex items-center gap-4">
+
+                    <div class="text-right">
+
+                        <p class="text-sm font-medium">
+
+                            {{ request.user.username }}
+
+                        </p>
+
+                        <p class="text-xs text-slate-500">
+
+                            Researcher
+
+                        </p>
+
+                    </div>
+
+                    <div class="w-9 h-9 rounded-full bg-slate-800
+                                flex items-center justify-center
+                                text-sm font-semibold">
+
+                        {{ request.user.username|first|upper }}
+
+                    </div>
+
+                    <a
+                        href="{% url 'logout' %}"
+                        class="text-sm text-slate-400
+                               hover:text-white transition-colors">
+
+                        Logout
+
+                    </a>
+
+                </div>
+
+            </header>
+
+
+            <!-- Page content -->
+
+            <main class="flex-1 p-8">
+
+                {% block content %}
+
+                {% endblock %}
+
+            </main>
+
+        </div>
+
+    </div>
+
+
+    <!-- Page-specific JavaScript -->
+
+    <script src="{% static 'research/js/dashboard.js' %}"></script>
+
+</body>
+
+</html>
