@@ -45,7 +45,9 @@ class ResearchView(APIView):
 
         try:
 
-            agent = ResearchAgent()
+            agent = ResearchAgent(
+                user_id=request.user.id
+            )
 
             result = agent.run(
                 research_request.query

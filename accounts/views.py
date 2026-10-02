@@ -20,7 +20,7 @@ class LoginView(View):
         
         if user is not None:
             login(request,user)
-            return redirect("dashboard")
+            return redirect("research")
         
         return render(
             request,

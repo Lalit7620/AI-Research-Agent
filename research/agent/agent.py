@@ -2,11 +2,14 @@ import os
 
 from agno.agent import Agent
 from agno.models.groq import Groq
+from .tools import search_documents,web_search_tools
 
 
 class ResearchAgent:
 
-    def __init__(self):
+    def __init__(self,user_id):
+        
+        self.user_id=user_id
 
         self.agent = Agent(
             model=Groq(
@@ -17,9 +20,8 @@ class ResearchAgent:
             ),
 
             tools=[
-                {
-                    "type": "browser_search"
-                }
+                web_search_tools,
+                search_documents
             ],
 
             instructions=[
@@ -35,6 +37,9 @@ class ResearchAgent:
 
     def run(self, query: str):
 
-        response = self.agent.run(query)
+        response = self.agent.run(
+            query,
+            user_id=str(self.user_id)
+        )
 
         return response.content
