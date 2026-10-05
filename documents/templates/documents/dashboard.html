@@ -1,0 +1,135 @@
+{% extends "research/base.html" %}
+{% load static %}
+
+{% block title %}Documents | ResearchAI{% endblock %}
+
+{% block header_title %}
+    Documents
+{% endblock %}
+
+{% block content %}
+
+<div class="max-w-6xl mx-auto">
+
+    <!-- Page Header -->
+
+    <section class="mb-10">
+
+        <p class="text-sm text-indigo-400 font-medium mb-2">
+            KNOWLEDGE BASE
+        </p>
+
+        <h2 class="text-3xl md:text-4xl font-semibold tracking-tight">
+            Your Documents
+        </h2>
+
+        <p class="text-slate-400 mt-3 max-w-2xl">
+            Upload documents that your research agent can use
+            as a knowledge source when answering your questions.
+        </p>
+
+    </section>
+
+
+    <!-- Upload Section -->
+
+    <section class="research-card p-6 md:p-8 mb-10">
+
+        <div class="mb-6">
+
+            <h3 class="text-xl font-semibold">
+                Upload a document
+            </h3>
+
+            <p class="text-sm text-slate-500 mt-2">
+                Upload a PDF to add it to your research knowledge base.
+            </p>
+
+        </div>
+
+
+        <form id="document-upload-form">
+
+            {% csrf_token %}
+
+            <div class="flex flex-col md:flex-row gap-4">
+
+                <input
+                    type="file"
+                    id="document-file"
+                    accept=".pdf,application/pdf"
+                    class="research-input flex-1"
+                    required
+                >
+
+                <button
+                    type="submit"
+                    id="upload-button"
+                    class="research-button"
+                >
+                    <span id="upload-button-text">
+                        Upload Document
+                    </span>
+
+                    <span>
+                        ↑
+                    </span>
+
+                </button>
+
+            </div>
+
+
+            <p
+                id="upload-message"
+                class="text-sm mt-4 hidden">
+            </p>
+
+        </form>
+
+    </section>
+
+
+    <!-- Documents -->
+
+    <section>
+
+        <div class="flex items-center justify-between mb-5">
+
+            <div>
+
+                <h3 class="text-xl font-semibold">
+                    My Documents
+                </h3>
+
+                <p class="text-sm text-slate-500 mt-1">
+                    Documents available to your research agent
+                </p>
+
+            </div>
+
+        </div>
+
+
+        <div
+            id="documents-list"
+            class="research-card p-6"
+        >
+
+            <div class="text-center py-8">
+
+                <div class="research-spinner mx-auto mb-4"></div>
+
+                <p class="text-slate-400">
+                    Loading documents...
+                </p>
+
+            </div>
+
+        </div>
+
+    </section>
+
+</div>
+<script src="{% static 'documents/dashboard.js' %}"></script>
+{% endblock %}

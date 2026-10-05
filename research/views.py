@@ -7,7 +7,7 @@ from rest_framework import status
 from django.shortcuts import render
 
 from .models import ResearchRequest, ResearchReport
-from .serializers import ResearchRequestSerializers
+from .serializers import ResearchRequestSerializers,ResearchHistorySerializers,ResearchReportSerializer
 from .agent.agent import ResearchAgent
 
 
@@ -84,3 +84,67 @@ class ResearchView(APIView):
                 },
                 status=status.HTTP_500_INTERNAL_SERVER_ERROR
             )
+            
+            
+class ResearchHistoryView(APIView):
+    authentication_classes=[SessionAuthentication]
+    permission_classes=[IsAuthenticated]
+    
+    def get(self,request):
+        research_requests=ResearchRequest.objects.filter(
+            user=request.user
+        ).order_by("-created_at")
+        
+        serializer=ResearchHistorySerializers(
+            research_requests,
+            many=True
+        )
+        
+        return Response(
+            serializer.data,
+            status=status.HTTP_200_OK
+        )
+        
+class ResearchDetailView(APIView):
+
+    authentication_classes = [SessionAuthentication]
+    permission_classes = [IsAuthenticated]
+
+    def get(self, request, request_id):
+
+        research_request = ResearchRequest.objects.filter(
+            id=request_id,
+            user=request.user
+        ).first()
+
+        if not research_request:
+
+            return Response(
+                {
+                    "error": "Research request not found."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        if not hasattr(research_request, "report"):
+
+            return Response(
+                {
+                    "error": "Research report not available."
+                },
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        report = research_request.report
+
+        return Response(
+            {
+                "id": research_request.id,
+                "query": research_request.query,
+                "status": research_request.status,
+                "report": ResearchReportSerializer(
+                    report
+                ).data
+            },
+            status=status.HTTP_200_OK
+        )

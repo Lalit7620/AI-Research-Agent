@@ -37,3 +37,10 @@ def add_chunks(document_id,user_id,chunks,embeddings):
         embeddings=embeddings.tolist(),
         metadatas=metadatas
     )
+    
+def delete_document_chunks(document_id):
+    collection.delete(
+        where={
+            "document_id":document_id
+        }
+    )

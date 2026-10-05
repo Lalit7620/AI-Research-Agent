@@ -1,8 +1,10 @@
 import os
 
 from agno.agent import Agent
+from agno.run import RunStatus
 from agno.models.groq import Groq
-from .tools import search_documents,web_search_tools
+from .tools import search_documents  #search_web
+from .prompts import RESEARCH_AGENT_SYSTEM_PROMPT
 
 
 class ResearchAgent:
@@ -20,17 +22,11 @@ class ResearchAgent:
             ),
 
             tools=[
-                web_search_tools,
+                {"type": "browser_search"},
                 search_documents
             ],
 
-            instructions=[
-                "You are an AI research assistant.",
-                "Use browser search whenever the question requires "
-                "current, recent, or external information.",
-                "Use the information found through web search to "
-                "produce an accurate and well-structured answer.",
-            ],
+            instructions=RESEARCH_AGENT_SYSTEM_PROMPT,
 
             markdown=True,
         )
@@ -41,5 +37,10 @@ class ResearchAgent:
             query,
             user_id=str(self.user_id)
         )
+
+        if response.status != RunStatus.completed:
+            raise RuntimeError(
+                response.content or "Research run failed."
+            )
 
         return response.content

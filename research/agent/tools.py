@@ -1,4 +1,4 @@
-from agno.tools.websearch import WebSearchTools
+from agno.tools.duckduckgo import DuckDuckGoTools
 from agno.run import RunContext
 from documents.services.retriever import retrieve
 from documents.services.context_builder import build_context
@@ -23,9 +23,23 @@ def search_documents(query:str, run_context:RunContext) ->str:
     return context
 
 
-web_search_tools=WebSearchTools(
-    backend="duckduckgo",
+duckduckgo_tools = DuckDuckGoTools(
     enable_search=True,
     enable_news=False,
     fixed_max_results=5
 )
+
+
+def search_web(query: str, max_results: int = 5) -> str:
+    """
+    Search the web for current or external information.
+
+    Args:
+        query: The search query.
+        max_results: Maximum number of results to return.
+    """
+
+    return duckduckgo_tools.web_search(
+        query=query,
+        max_results=max_results
+    )
